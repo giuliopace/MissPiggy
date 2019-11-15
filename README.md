@@ -17,13 +17,17 @@ Giulio Pace, 11835706
 
 
 ## Timesheet of Giulio Pace
-2019/10/17	13-16h	attended lecture
-2019/10/18	09-12h	attended lecture
-2019/11/15	10-12h	brainstorming & project setup
+| Date        | Time    | Description                     |
+|-------------|---------|---------------------------------|
+| 2019/10/17  | 13-16h  | attended lecture                |
+| 2019/10/18  | 09-12h  | attended lecture                |
+| 2019/11/15  | 10-12h  | brainstorming & project setup   |
 
 ## Timesheet of David Penz
-2019/10/17	13-16h	attended lecture
-2019/10/18	09-12h	attended lecture
-2019/11/15	10-12h	brainstorming & project setup
+| Date        | Time    | Description                     |
+|-------------|---------|---------------------------------|
+| 2019/10/17  | 13-16h  | attended lecture                |
+| 2019/10/18  | 09-12h  | attended lecture                |
+| 2019/11/15  | 10-12h  | brainstorming & project setup   |
 
 ## Info on architecture
