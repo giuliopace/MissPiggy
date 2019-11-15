@@ -3,6 +3,7 @@ Image recognition deep learning model to find Miss Piggy and other pigs in an ep
 
 ## Student Data
 David Penz, 11703497
+
 Giulio Pace, 11835706
 
 ## Entry point of the code
