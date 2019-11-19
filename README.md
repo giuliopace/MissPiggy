@@ -23,6 +23,8 @@ Giulio Pace, 11835706
 | 2019/10/17  | 13-16h  | attended lecture                |
 | 2019/10/18  | 09-12h  | attended lecture                |
 | 2019/11/15  | 10-12h  | brainstorming & project setup   |
+| 2019/11/16  | 16-17h  | extracted images and audio from files|
+| 2019/11/17  | 17-21h  | started labelling images		  |
 
 ## Timesheet of David Penz
 | Date        | Time    | Description                     |
