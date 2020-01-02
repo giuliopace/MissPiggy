@@ -27,7 +27,6 @@ def audio_data_generator(movie, mode, batchsize=64):
         d = librosa.stft(y)
         d_harmonic, _ = librosa.decompose.hpss(d)
         d_harmonic = d_harmonic[:,:8]
-        print(d_harmonic.shape)
         data.append(d_harmonic)
 
         if file.split('/')[4] == 'pigs':
