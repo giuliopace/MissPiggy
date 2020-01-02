@@ -3,3 +3,4 @@ small_dataset/*
 data/
 *.png
 *.zip
+.idea/*
