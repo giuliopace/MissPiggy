@@ -3,6 +3,7 @@ import random
 import librosa
 from sklearn.metrics import roc_auc_score
 from keras.callbacks import Callback
+import numpy as np
 
 
 class ROCCallback(Callback):
@@ -70,9 +71,9 @@ def audio_data_generator(movie, mode, batchsize=64):
         i += 1
         if i % batchsize == 0:
             i = 0
-            yield (data, targets)
+            yield (np.array(data), np.array(targets))
 
-'''
+"""
 datagen = audio_data_generator('movie1', 'train', 5)
 x, y = next(datagen)
 print(len(x), len(y))
@@ -84,5 +85,6 @@ x, y = next(datagen)
 print(len(x), len(y))
 x, y = next(datagen)
 print(len(x), len(y))
-print(x[0])
-'''
+x = x.reshape(x.shape[0],x.shape[1],x.shape[2],1)
+print(x.shape, y.shape)
+"""

@@ -12,6 +12,7 @@ from keras.preprocessing.image import ImageDataGenerator
 from tools import ROCCallback
 import joblib
 
+
 # define cnn model
 def define_model():
 	model = Sequential()

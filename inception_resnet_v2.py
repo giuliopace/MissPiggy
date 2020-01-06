@@ -6,9 +6,10 @@ from keras.preprocessing.image import ImageDataGenerator
 from keras.applications import InceptionResNetV2
 import joblib
 
+
 # define cnn model
 def define_model():
-	model = InceptionResNetV2(weights=None, classes=1)
+	model = InceptionResNetV2(weights=None, classes=2)
 	# compile model
 	opt = SGD(lr=0.001, momentum=0.9)
 	model.compile(optimizer=opt, loss='binary_crossentropy', metrics=['accuracy'])
@@ -39,12 +40,12 @@ def run_test_harness():
 	datagen = ImageDataGenerator(rescale=1.0/255.0)
 	# prepare iterators
 	train_it = datagen.flow_from_directory('dataset/movie3/small_dataset/train/',
-		class_mode='binary', batch_size=64, target_size=(299, 299))
+		class_mode='categorical', batch_size=64, target_size=(299, 299))
 	test_it = datagen.flow_from_directory('dataset/movie3/small_dataset/test/',
-		class_mode='binary', batch_size=64, target_size=(299, 299))
+		class_mode='categorical', batch_size=64, target_size=(299, 299))
 	# fit model
 	history = model.fit_generator(train_it, steps_per_epoch=len(train_it),
-		validation_data=test_it, validation_steps=len(test_it), epochs=20, verbose=0)
+		validation_data=test_it, validation_steps=len(test_it), epochs=5, verbose=0)
 
 	joblib.dump(model, 'inception_model')
 
