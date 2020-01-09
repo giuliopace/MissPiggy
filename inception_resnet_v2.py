@@ -1,10 +1,13 @@
 # baseline model for the dogs vs cats dataset
 import sys
 from matplotlib import pyplot
-from keras.optimizers import SGD
+from keras.optimizers import SGD, Adam
 from keras.preprocessing.image import ImageDataGenerator
 from keras.applications import InceptionResNetV2
 import joblib
+from keras.callbacks import ModelCheckpoint, EarlyStopping
+from keras.models import Model
+from keras.layers import Dense
 
 
 # define cnn model
@@ -12,6 +15,7 @@ def define_model():
 	model = InceptionResNetV2(weights=None, classes=2)
 	# compile model
 	opt = SGD(lr=0.001, momentum=0.9)
+	# opt = Adam(lr=0.001)
 	model.compile(optimizer=opt, loss='binary_crossentropy', metrics=['accuracy'])
 	return model
 
@@ -39,15 +43,14 @@ def run_test_harness():
 	# create data generator
 	datagen = ImageDataGenerator(rescale=1.0/255.0)
 	# prepare iterators
-	train_it = datagen.flow_from_directory('dataset/movie3/small_dataset/train/',
+	train_it = datagen.flow_from_directory('dataset/whole_dataset/train/',
 		class_mode='categorical', batch_size=64, target_size=(299, 299))
-	test_it = datagen.flow_from_directory('dataset/movie3/small_dataset/test/',
+	test_it = datagen.flow_from_directory('dataset/whole_dataset/test/',
 		class_mode='categorical', batch_size=64, target_size=(299, 299))
 	# fit model
-	history = model.fit_generator(train_it, steps_per_epoch=len(train_it),
-		validation_data=test_it, validation_steps=len(test_it), epochs=5, verbose=0)
+	history = model.fit_generator(train_it, steps_per_epoch=len(train_it), validation_data=test_it, validation_steps=len(test_it), epochs=5, verbose=0)
 
-	joblib.dump(model, 'inception_model')
+	joblib.dump(model, 'inception_model_all')
 
 	# evaluate model
 	_, acc = model.evaluate_generator(test_it, steps=len(test_it), verbose=0)
