@@ -9,6 +9,9 @@ from keras.layers import Dense
 from keras.layers import Flatten
 from keras.optimizers import SGD
 from keras.preprocessing.image import ImageDataGenerator
+from tools import ROCCallback
+import joblib
+
 
 # define cnn model
 def define_model():
@@ -54,6 +57,8 @@ def run_test_harness():
 	# fit model
 	history = model.fit_generator(train_it, steps_per_epoch=len(train_it),
 		validation_data=test_it, validation_steps=len(test_it), epochs=20, verbose=0)
+
+	joblib.dump(model, 'cnn_model')
 
 	# evaluate model
 	_, acc = model.evaluate_generator(test_it, steps=len(test_it), verbose=0)

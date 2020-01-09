@@ -3,11 +3,14 @@ import sys
 from matplotlib import pyplot
 from keras.optimizers import SGD
 from keras.preprocessing.image import ImageDataGenerator
-from keras.applications import VGG19
+from keras.applications import VGG16
+import joblib
+import numpy as np
+
 
 # define cnn model
 def define_model():
-	model = VGG19(weights=None, classes=1)
+	model = VGG16(weights=None, classes=2)
 	# compile model
 	opt = SGD(lr=0.001, momentum=0.9)
 	model.compile(optimizer=opt, loss='binary_crossentropy', metrics=['accuracy'])
@@ -38,12 +41,14 @@ def run_test_harness():
 	datagen = ImageDataGenerator(rescale=1.0/255.0)
 	# prepare iterators
 	train_it = datagen.flow_from_directory('dataset/movie3/small_dataset/train/',
-		class_mode='binary', batch_size=64, target_size=(224, 224))
+		class_mode='categorical', batch_size=64, target_size=(224, 224))
 	test_it = datagen.flow_from_directory('dataset/movie3/small_dataset/test/',
-		class_mode='binary', batch_size=64, target_size=(224, 224))
+		class_mode='categorical', batch_size=64, target_size=(224, 224))
 	# fit model
 	history = model.fit_generator(train_it, steps_per_epoch=len(train_it),
-		validation_data=test_it, validation_steps=len(test_it), epochs=20, verbose=0)
+		validation_data=test_it, validation_steps=len(test_it), epochs=5, verbose=0)
+
+	joblib.dump(model, 'vgg16_model')
 
 	# evaluate model
 	_, acc = model.evaluate_generator(test_it, steps=len(test_it), verbose=0)
