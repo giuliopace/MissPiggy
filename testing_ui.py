@@ -32,7 +32,7 @@ def create_spectrogram(filename, name):
     ax.set_frame_on(False)
     S = librosa.feature.melspectrogram(y=clip, sr=sample_rate)
     librosa.display.specshow(librosa.power_to_db(S, ref=np.max))
-    name = FILEPATH + name
+    name = FILEPATH + 'audio_features/'+ name
     plt.savefig(name, dpi=400, bbox_inches='tight', pad_inches=0)
     plt.close()
     fig.clf()
@@ -43,7 +43,7 @@ def create_spectrogram(filename, name):
 
 def preprocess_audio():
     print('Preprocessing audio files...')
-    Data_dir = np.array(glob(FILEPATH + '*'))
+    Data_dir = np.array(glob(FILEPATH + 'audio/*'))
     i = 0
     batch = 1
     batch_size = 2000
@@ -62,9 +62,9 @@ def preprocess_audio():
 
 def predicting_targets(image_net, audio_net):
     datagen = ImageDataGenerator(rescale=1.0 / 255.0)
-    test_img = datagen.flow_from_directory(FILEPATH, class_mode='categorical', batch_size=64, target_size=(299, 299),
+    test_img = datagen.flow_from_directory(FILEPATH + 'images/', class_mode='categorical', batch_size=64, target_size=(299, 299),
                                            seed=10)
-    test_audio = datagen.flow_from_directory(FILEPATH, class_mode='categorical', batch_size=64, target_size=(64, 64),
+    test_audio = datagen.flow_from_directory(FILEPATH + 'audio_features/', class_mode='categorical', batch_size=64, target_size=(64, 64),
                                              seed=10)
     print('Finding pigs...')
     y_pred_img = image_net.predict_generator(test_img, steps=len(test_img), verbose=0)
