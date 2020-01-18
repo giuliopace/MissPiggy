@@ -77,7 +77,7 @@ def run_test_harness():
 	test_it = datagen.flow_from_directory('dataset/audio_features/test/',
 		class_mode='categorical', batch_size=64, target_size=(64, 64))
 	# fit model
-	history = model.fit_generator(train_it, steps_per_epoch=len(train_it), validation_data=test_it, validation_steps=len(test_it), epochs=1, verbose=0)
+	history = model.fit_generator(train_it, steps_per_epoch=len(train_it), validation_data=test_it, validation_steps=len(test_it), epochs=10, verbose=2)
 
 	joblib.dump(model, 'cnn_audio_model')
 

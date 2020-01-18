@@ -1,90 +1,24 @@
-import os
-import random
-import librosa
-from sklearn.metrics import roc_auc_score
-from keras.callbacks import Callback
 import numpy as np
+import librosa
+import librosa.display
+import matplotlib.pyplot as plt
 
 
-class ROCCallback(Callback):
-    def __init__(self,training_data,validation_data):
-        self.x = training_data[0]
-        self.y = training_data[1]
-        self.x_val = validation_data[0]
-        self.y_val = validation_data[1]
+def create_spectrogram(filename, name, mode):
+    plt.interactive(False)
+    clip, sample_rate = librosa.load(filename, sr=None)
+    fig = plt.figure(figsize=[0.72,0.72])
+    ax = fig.add_subplot(111)
+    ax.axes.get_xaxis().set_visible(False)
+    ax.axes.get_yaxis().set_visible(False)
+    ax.set_frame_on(False)
+    S = librosa.feature.melspectrogram(y=clip, sr=sample_rate)
+    librosa.display.specshow(librosa.power_to_db(S, ref=np.max))
+    name = 'dataset/audio_features/' + mode + '/' + name
+    plt.savefig(name, dpi=400, bbox_inches='tight',pad_inches=0)
+    plt.close()
+    fig.clf()
+    plt.close(fig)
+    plt.close('all')
+    del filename,clip,sample_rate,fig,ax,S
 
-    def on_train_begin(self, logs={}):
-        return
-
-    def on_train_end(self, logs={}):
-        return
-
-    def on_epoch_begin(self, epoch, logs={}):
-        return
-
-    def on_epoch_end(self, epoch, logs={}):
-        y_pred = self.model.predict(self.x)
-        roc = roc_auc_score(self.y, y_pred)
-        y_pred_val = self.model.predict(self.x_val)
-        roc_val = roc_auc_score(self.y_val, y_pred_val)
-        print('\rroc-auc: %s - roc-auc_val: %s' % (str(round(roc,4)),str(round(roc_val,4))),end=100*' '+'\n')
-        return
-
-    def on_batch_begin(self, batch, logs={}):
-        return
-
-    def on_batch_end(self, batch, logs={}):
-        return
-
-
-def audio_data_generator(movie, mode, batchsize=64):
-    # train set
-    pigs = os.listdir('dataset/audio/' + mode + '/pigs/')
-    no_pigs = os.listdir('dataset/audio/' + mode + '/no_pigs/')
-
-    filenames = []
-    for p in pigs:
-        filenames.append('dataset/audio/' + mode + '/pigs/' + p)
-    for p in no_pigs:
-        filenames.append('dataset/audio/' + mode + '/no_pigs/' + p)
-
-    random.seed(42)
-    random.shuffle(filenames)
-
-    i = 0
-    for file in filenames[:64]:
-        if i == 0:
-            data = []
-            targets = []
-
-        y, sr = librosa.load(file)
-        d = librosa.stft(y)
-        d_harmonic, _ = librosa.decompose.hpss(d)
-        d_harmonic = d_harmonic[:,:8]
-        data.append(d_harmonic)
-
-        if file.split('/')[4] == 'pigs':
-            targets.append(1)
-        else:
-            targets.append(0)
-
-        i += 1
-        if i % batchsize == 0:
-            yield (np.array(data).reshape(i,-1,1), np.array(targets))
-            i = 0
-
-"""
-datagen = audio_data_generator('movie1', 'train', 5)
-x, y = next(datagen)
-print(len(x), len(y))
-x, y = next(datagen)
-print(len(x), len(y))
-
-datagen = audio_data_generator('movie1', 'test', 5)
-x, y = next(datagen)
-print(len(x), len(y))
-x, y = next(datagen)
-print(len(x), len(y))
-x = x.reshape(x.shape[0],x.shape[1],x.shape[2],1)
-print(x.shape, y.shape)
-"""

@@ -5,3 +5,4 @@ data/
 *.zip
 .idea/*
 models/*
+test_episodes/*
