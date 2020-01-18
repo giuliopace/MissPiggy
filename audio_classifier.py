@@ -9,7 +9,7 @@ from keras.layers import MaxPooling2D
 from keras.layers import MaxPooling1D
 from keras.layers import Dense
 from keras.layers import Flatten
-from keras.optimizers import SGD
+from keras.optimizers import SGD, Adam
 from keras.preprocessing.image import ImageDataGenerator
 from tools import audio_data_generator
 import joblib
@@ -18,14 +18,19 @@ import joblib
 # define cnn model
 def define_model():
 	model = Sequential()
-	model.add(Conv2D(32, (3, 3), activation='relu', kernel_initializer='he_uniform', padding='same',
-					 input_shape=(1025, 8, 1)))
-	model.add(MaxPooling2D((2, 2)))
+	model.add(Conv1D(1, 5, activation='tanh', input_shape=(8200,1)))
+	model.add(MaxPooling1D(2))
+	model.add(Conv1D(1, 5, activation='tanh'))
+	model.add(MaxPooling1D(2))
+	model.add(Conv1D(1, 5, activation='tanh'))
+	model.add(MaxPooling1D(2))
 	model.add(Flatten())
-	model.add(Dense(128, activation='relu', kernel_initializer='he_uniform'))
+	model.add(Dense(1000, activation='relu'))
+	model.add(Dense(200, activation='relu'))
+	model.add(Dense(10, activation='relu'))
 	model.add(Dense(1, activation='sigmoid'))
 	# compile model
-	opt = SGD(lr=0.001, momentum=0.9)
+	opt = Adam(lr=0.001)
 	model.compile(optimizer=opt, loss='binary_crossentropy', metrics=['accuracy'])
 	return model
 
@@ -53,9 +58,14 @@ def run_test_harness():
 	# create data generator and prepare iterators
 	train_it = audio_data_generator('movie1', 'train')
 	test_it = audio_data_generator('movie1', 'test')
+	print('Hello')
+	train, test = next(train_it)
+	print(train.shape)
+	print(len(list(test_it)))
+	print('train')
 	# fit model
 	history = model.fit_generator(train_it, steps_per_epoch=len(list(train_it)),
-		validation_data=test_it, validation_steps=len(test_it), epochs=20, verbose=0)
+		validation_data=test_it, validation_steps=len(list(test_it)), epochs=1, verbose=0)
 
 	joblib.dump(model, 'cnn_audio_model')
 

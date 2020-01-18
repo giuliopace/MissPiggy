@@ -39,20 +39,20 @@ class ROCCallback(Callback):
 
 def audio_data_generator(movie, mode, batchsize=64):
     # train set
-    pigs = os.listdir('dataset/' + movie + '/audio/' + mode + '/pigs/')
-    no_pigs = os.listdir('dataset/' + movie + '/audio/' + mode + '/no_pigs/')
+    pigs = os.listdir('dataset/audio/' + mode + '/pigs/')
+    no_pigs = os.listdir('dataset/audio/' + mode + '/no_pigs/')
 
     filenames = []
     for p in pigs:
-        filenames.append('dataset/' + movie + '/audio/' + mode + '/pigs/' + p)
+        filenames.append('dataset/audio/' + mode + '/pigs/' + p)
     for p in no_pigs:
-        filenames.append('dataset/' + movie + '/audio/' + mode + '/no_pigs/' + p)
+        filenames.append('dataset/audio/' + mode + '/no_pigs/' + p)
 
     random.seed(42)
     random.shuffle(filenames)
 
     i = 0
-    for file in filenames:
+    for file in filenames[:64]:
         if i == 0:
             data = []
             targets = []
@@ -70,8 +70,8 @@ def audio_data_generator(movie, mode, batchsize=64):
 
         i += 1
         if i % batchsize == 0:
+            yield (np.array(data).reshape(i,-1,1), np.array(targets))
             i = 0
-            yield (np.array(data), np.array(targets))
 
 """
 datagen = audio_data_generator('movie1', 'train', 5)
