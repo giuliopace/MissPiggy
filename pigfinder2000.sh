@@ -27,5 +27,3 @@ echo The dataset has been created.
 
 echo Running 
 python3 -W ignore testing_ui.py 
-
-echo all good
