@@ -61,7 +61,10 @@ def preprocess_audio():
 		n = 0
 		for file in tqdm(Data_dir[i:i + batch_size], desc='Batch ' + str(batch)):
 			filename = file.split('/')[2].split('.')[0] + '.png'
-			create_spectrogram(file, filename)
+			try:
+				create_spectrogram(file, filename)
+			except Exception:
+				pass 
 			n += 1
 		gc.collect()
 		i += n
