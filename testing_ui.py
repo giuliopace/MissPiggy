@@ -140,7 +140,7 @@ def watermark(input_image_path,
 def transform_to_timestamp(i):
 	tot = i * 0.2
 	s = int(tot % 60)
-	m = tot // 60
+	m = int(tot // 60)
 	return str(m) + ":" + str(s)
 
 def output_manager(y_img, y_audio):
