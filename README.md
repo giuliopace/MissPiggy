@@ -1,4 +1,4 @@
-# MissPiggy
+# PigFinder 2000
 Image recognition deep learning model to find Miss Piggy and other pigs in an episode of the Muppet show
 
 ## Student Data
@@ -29,7 +29,7 @@ A very simple and shallow CNN has been implemented to create some kind of baseli
 - Dense Layer (Output 1)
 - Sigmoid Activation
 
-During the research phase of this project, two architectures seemed to perform very well on image classification tasks, the VGG 19 and the Inception ResNet v2. The final version of this project is using the Inception ResNet v2 for image classification of the individual frames.
+During the research phase of this project, two architectures seemed to perform very well on image classification tasks, the VGG 16 and the Inception ResNet v2. The final version of this project is using the Inception ResNet v2 for image classification of the individual frames.
 ### Audio Classification
 As we wanted to stick to a full Deep Learning Approach for this project, additional research was conducted to find Deep Learning models for audio classification. One of the more common approaches seems to be preprocessing the audio files into a spectrogram (using librosa) and saving the plots as image. Those images are then fed into a Convolutional Neural Network in order to classify them accordingly:
 - Input Shape 64x64
@@ -59,12 +59,21 @@ As we wanted to stick to a full Deep Learning Approach for this project, additio
 - Softmax Activation
 
 ## Performance indicators
-- F1 (recall, precision)
-- ROC Curve (TPR, FPR)
-- Cross Validation
-- Statistical significance testing (?)
-- Human Evaluation
+To measure the performance of our models, we were using the following metrics:
+- Accuracy throughout the training process
+- ROC curve using test data
+- Human Evaluation by taking a closer look at the results from our model
+### Image Classification
+The initial baseline was created by using the baseline Image CNN and let it train for 20 epochs on a small dataset. Additionally, a first training round was done with the VGG 16 and Inception ResNet v2 model (2 epochs) to compare their performance with the baseline model.
 
+--- insert ROC Curve here
+  
+As the Inception ResNet v2 performed the best on first runs using a small dataset, we decided to use it an train it on the whole dataset for the final network of this project. The network was trained for 5 epochs (1.5 days), achieving a training accuracy of 97%.
+
+--- insert ROC Curve here
+
+### Audio Classification
+The Audio CNN was trained on the dataset for 100 epochs (0.5 days), unfortunately though, the model did not perform very well and completely overfitted on class 0 (no pigs present). This could be due to poor quality of labelling, unbalanced datasets (more samples of no pigs vs few samples of pigs). Due to its poor performance, the ROC curve also led to an AUC of 0.5.
 
 ## Timesheet of Giulio Pace
 | Date        | Time    | Description                     									|
