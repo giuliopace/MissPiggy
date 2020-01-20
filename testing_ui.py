@@ -134,6 +134,11 @@ def watermark(input_image_path,
 	drawing.text(pos, text, fill=color, font=font)
 	photo.save(output_image_path)
 
+def transform_to_timestamp(i):
+	tot = i * 0.2
+	s = tot % 60
+	m = tot / 60
+	return str(m) + ":" + str(s)
 
 def output_manager(y_img, y_audio):
 	found_some_pics = False
@@ -174,12 +179,12 @@ def output_manager(y_img, y_audio):
 				curr_start = i
 		else:
 			if streak == True:
-				print("pig audio found from", curr_start, " to ", i-1)
+				print("pig audio found from", transform_to_timestamp(curr_start), " to ", transform_to_timestamp(i-1))
 				streak = False
 				curr_start = -1
 
 	if curr_start != -1:
-		print("pig audio found from", curr_start, " to ", len(y_audio))
+		print("pig audio found from", transform_to_timestamp(curr_start), " to ", transform_to_timestamp(len(y_audio)))
 	if found_some_audio == False:
 		print("no pigs found in audio")
 	#print(y_img)

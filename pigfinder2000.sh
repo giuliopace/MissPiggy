@@ -1,5 +1,11 @@
 #!/bin/sh
-echo Welcome to PigFinder2000, the app that allows you to find pigs in a Muppet Show episode.
+echo "           _       _____           __         ___   ____  ____  ____ ";
+echo "    ____  (_)___ _/ __(_)___  ____/ /__  ____|__ \ / __ \/ __ \/ __ \ ";
+echo "   / __ \/ / __ \`/ /_/ / __ \/ __  / _ \/ ___/_/ // / / / / / / / / /";
+echo "  / /_/ / / /_/ / __/ / / / / /_/ /  __/ /  / __// /_/ / /_/ / /_/ / ";
+echo " / .___/_/\__, /_/ /_/_/ /_/\__,_/\___/_/  /____/\____/\____/\____/  ";
+echo "/_/      /____/                                                      ";
+
 
 echo 
 echo The video you chose is $1
