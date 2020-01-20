@@ -16,6 +16,47 @@ There is one test file in the test_episodes folder available for testing.
 example:
 $ ./pigfinder2000.sh test_episodes/test1.mp4
 
+## Info on architecture
+### Image Classification
+A very simple and shallow CNN has been implemented to create some kind of baseline evaluation for the other models. This CNN consists of the following layers:
+- Input Shape 200x200x3
+- 2D Convolution (Kernel Size 3x3)
+- ReLU Activation
+- 2D MaxPooling (Kernel Size 2x2)
+- Flatten Layer as Input for FC Layers
+- Dense Layer (Output 128)
+- ReLU Activation
+- Dense Layer (Output 1)
+- Sigmoid Activation
+
+During the research phase of this project, two architectures seemed to perform very well on image classification tasks, the VGG 19 and the Inception ResNet v2. The final version of this project is using the Inception ResNet v2 for image classification of the individual frames.
+### Audio Classification
+As we wanted to stick to a full Deep Learning Approach for this project, additional research was conducted to find Deep Learning models for audio classification. One of the more common approaches seems to be preprocessing the audio files into a spectrogram (using librosa) and saving the plots as image. Those images are then fed into a Convolutional Neural Network in order to classify them accordingly:
+- Input Shape 64x64
+- 2D Convolution (Kernel Size 3x3)
+- ReLU Activation
+- 2D Convolution (Kernel Size 3x3)
+- ReLU Activation
+- 2D MaxPooling (Kernel Size 2x2)
+- Dropout
+- 2D Convoluation (Kernel Size 3x3)
+- ReLU Activatoin
+- 2D Convolution (Kernel Size 3x3)
+- ReLU Activation
+- 2D MaxPooling (Kernel Size 2x2)
+- Dropout
+- 2D Convoluation (Kernel Size 3x3)
+- ReLU Activatoin
+- 2D Convolution (Kernel Size 3x3)
+- ReLU Activation
+- 2D MaxPooling (Kernel Size 2x2)
+- Dropout
+- Flatten Layer as Input for FC Layers
+- Dense Layer (Output 512)
+- ReLU Activation
+- Dropout
+- Dense Layer (Output 2)
+- Softmax Activation
 
 ## Performance indicators
 - F1 (recall, precision)
@@ -60,9 +101,6 @@ $ ./pigfinder2000.sh test_episodes/test1.mp4
 | 2019/01/18  | 12-16h  | Attempts at GUI, settled for a terminal script 					|
 | 2019/01/19  | 10-12h  | project finished 													|
 
-
-
-## Info on architecture
 
 ## Hardware Specs
 Ubuntu 18.04.3 LTS 64bit
