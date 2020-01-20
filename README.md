@@ -66,11 +66,11 @@ To measure the performance of our models, we were using the following metrics:
 ### Image Classification
 The initial baseline was created by using the baseline Image CNN and let it train for 20 epochs on a small dataset. Additionally, a first training round was done with the VGG 16 and Inception ResNet v2 model (2 epochs) to compare their performance with the baseline model.
 
---- insert ROC Curve here
+![ROC Plot small dataset](ROC_plot_small_dataset_present.png)
   
 As the Inception ResNet v2 performed the best on first runs using a small dataset, we decided to use it an train it on the whole dataset for the final network of this project. The network was trained for 5 epochs (1.5 days), achieving a training accuracy of 97%.
 
---- insert ROC Curve here
+![ROC Plot](inception_resnet_v2_all.py_plot.png)
 
 ### Audio Classification
 The Audio CNN was trained on the dataset for 100 epochs (0.5 days), unfortunately though, the model did not perform very well and completely overfitted on class 0 (no pigs present). This could be due to poor quality of labelling, unbalanced datasets (more samples of no pigs vs few samples of pigs). Due to its poor performance, the ROC curve also led to an AUC of 0.5.
