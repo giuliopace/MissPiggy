@@ -105,13 +105,27 @@ The Audio CNN was trained on the dataset for 100 epochs (0.5 days), unfortunatel
 | 2019/12/14  | 14-17h  | implementation of image model 									| 
 | 2019/12/22  | 20-22h  | research state of the art audio model								|
 | 2020/01/12  | 11-15h  | completed labelling images and audio 								|
+| 2020/01/13  | 23-24h  | initialisied training of the image model |
 | 2019/01/14  | 16-19h  | research and implementation audio model							|
 | 2019/01/17  | 14-16h  | completed audio model 											|
+| 2019/01/17  | 22-23h  | initialisied training of the audio model |
 | 2019/01/18  | 12-16h  | Attempts at GUI, settled for a terminal script 					|
 | 2019/01/19  | 10-12h  | project finished 													|
 
 
 ## Hardware Specs
+### Computer 1
 Ubuntu 18.04.3 LTS 64bit
-Memory 13,6 GiB
+RAM 13,6 GiB
 CPU AMD® Ryzen 5 pro 3500u w/ radeon vega mobile gfx × 8 
+
+### Computer 2
+Windows 10 Pro
+RAM 8 GB
+CPU Intel Core i7-6600 CPU 2.6 GHz
+
+### Computer 3 (Training of Networks)
+Windows 10 Pro
+RAM 16 GB
+CPU Intel Core i7 3.2 GHz
+GPU Nvidia GTX 1070
